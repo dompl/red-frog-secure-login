@@ -1,0 +1,1206 @@
+/**
+ * Red Frog Secure Login — Admin Settings Stylesheet.
+ *
+ * Dark cyberpunk-themed admin settings page, scoped to
+ * .rf-settings-wrap to avoid conflicts with WordPress admin.
+ *
+ * @package RedFrogSecureLogin
+ * @since   1.0.0
+ */
+
+/* ==========================================================================
+   CSS Variables
+   ========================================================================== */
+
+.rf-settings-wrap {
+	--bg-primary: #0a0a0f;
+	--bg-secondary: #12121a;
+	--bg-tertiary: #1a1a2e;
+	--accent-primary: #00ff88;
+	--accent-secondary: #00d4ff;
+	--accent-warn: #ff3366;
+	--accent-glow: #00ff8833;
+	--text-primary: #e0e0e0;
+	--text-muted: #6b7280;
+	--text-bright: #ffffff;
+	--border-subtle: #1f2937;
+	--border-focus: #00ff88;
+}
+
+/* ==========================================================================
+   Base Container
+   ========================================================================== */
+
+.rf-settings-wrap {
+	background-color: var(--bg-primary);
+	color: var(--text-primary);
+	font-family: "JetBrains Mono", "Fira Code", "Courier New", monospace;
+	font-size: 0.875rem;
+	line-height: 1.6;
+	padding: 0;
+	min-height: 100vh;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+}
+
+.rf-settings-wrap *,
+.rf-settings-wrap *::before,
+.rf-settings-wrap *::after {
+	box-sizing: border-box;
+}
+
+/* Override WP admin link colours inside our wrapper */
+.rf-settings-wrap a {
+	color: var(--accent-primary);
+	text-decoration: none;
+	transition: color 0.2s ease, opacity 0.2s ease;
+}
+
+.rf-settings-wrap a:hover {
+	color: var(--accent-secondary);
+	opacity: 0.9;
+}
+
+/* ==========================================================================
+   Header
+   ========================================================================== */
+
+.rf-settings-header {
+	display: flex;
+	align-items: center;
+	gap: 1rem;
+	padding: 1.5rem 2rem;
+	border-bottom: 1px solid var(--border-subtle);
+	background: var(--bg-secondary);
+}
+
+.rf-header-logo {
+	height: 2rem;
+	width: auto;
+	flex-shrink: 0;
+}
+
+.rf-header-title {
+	font-family: "Orbitron", sans-serif;
+	font-size: 1.5rem;
+	font-weight: 700;
+	color: var(--accent-primary);
+	margin: 0;
+	padding: 0;
+	line-height: 1;
+	text-shadow: 0 0 20px var(--accent-glow);
+	letter-spacing: 0.03em;
+}
+
+.rf-header-version {
+	color: var(--text-muted);
+	font-size: 0.75rem;
+	font-family: "JetBrains Mono", monospace;
+	background: var(--bg-tertiary);
+	padding: 0.2rem 0.6rem;
+	border-radius: 9999px;
+	border: 1px solid var(--border-subtle);
+}
+
+/* ==========================================================================
+   Tabs
+   ========================================================================== */
+
+.rf-tabs {
+	display: flex;
+	gap: 0;
+	border-bottom: 1px solid var(--border-subtle);
+	background: var(--bg-secondary);
+	padding: 0 2rem;
+	overflow-x: auto;
+}
+
+.rf-tab {
+	display: flex;
+	align-items: center;
+	gap: 0.5rem;
+	padding: 0.875rem 1.25rem;
+	background: transparent;
+	color: var(--text-muted);
+	font-family: "JetBrains Mono", monospace;
+	font-size: 0.8125rem;
+	font-weight: 500;
+	text-transform: uppercase;
+	letter-spacing: 0.08em;
+	border: none;
+	border-bottom: 2px solid transparent;
+	cursor: pointer;
+	transition: all 0.25s ease;
+	white-space: nowrap;
+}
+
+.rf-tab:hover {
+	color: var(--text-primary);
+	background: rgba(255, 255, 255, 0.02);
+}
+
+.rf-tab.active {
+	color: var(--accent-primary);
+	border-bottom-color: var(--accent-primary);
+}
+
+.rf-tab-icon {
+	width: 1rem;
+	height: 1rem;
+	flex-shrink: 0;
+}
+
+/* ==========================================================================
+   Tab Content
+   ========================================================================== */
+
+.rf-tab-content {
+	padding: 2rem;
+}
+
+/* ==========================================================================
+   Notice / Alert
+   ========================================================================== */
+
+.rf-notice {
+	display: flex;
+	align-items: center;
+	gap: 0.75rem;
+	margin: 1.5rem 2rem 0;
+	padding: 0.875rem 1.25rem;
+	border-radius: 0.75rem;
+	font-size: 0.8125rem;
+	font-weight: 500;
+	animation: rf-admin-fade-in 0.4s ease-out;
+}
+
+.rf-notice-success {
+	background: rgba(0, 255, 136, 0.08);
+	border: 1px solid rgba(0, 255, 136, 0.2);
+	color: var(--accent-primary);
+}
+
+.rf-notice-success svg {
+	flex-shrink: 0;
+}
+
+@keyframes rf-admin-fade-in {
+	from {
+		opacity: 0;
+		transform: translateY(-8px);
+	}
+	to {
+		opacity: 1;
+		transform: translateY(0);
+	}
+}
+
+/* ==========================================================================
+   Setting Cards
+   ========================================================================== */
+
+.rf-setting-card {
+	background: var(--bg-secondary);
+	border: 1px solid var(--border-subtle);
+	border-radius: 1rem;
+	padding: 0;
+	margin-bottom: 1.5rem;
+	transition: border-color 0.3s ease;
+	overflow: hidden;
+}
+
+.rf-setting-card:hover {
+	border-color: rgba(0, 255, 136, 0.15);
+}
+
+.rf-setting-card-header {
+	padding: 1.5rem 1.75rem 0;
+}
+
+.rf-section-title {
+	font-family: "Orbitron", sans-serif;
+	font-size: 1rem;
+	font-weight: 700;
+	color: var(--text-bright);
+	margin: 0 0 0.375rem;
+	padding: 0;
+	letter-spacing: 0.03em;
+}
+
+.rf-section-desc {
+	font-size: 0.8125rem;
+	color: var(--text-muted);
+	margin: 0;
+	padding: 0;
+	line-height: 1.5;
+}
+
+/* ==========================================================================
+   Setting Rows
+   ========================================================================== */
+
+.rf-setting-row {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 2rem;
+	padding: 1.25rem 1.75rem;
+	border-top: 1px solid rgba(31, 41, 55, 0.5);
+}
+
+.rf-setting-row:first-child,
+.rf-setting-card-header + .rf-setting-row {
+	border-top: none;
+	margin-top: 0.5rem;
+}
+
+.rf-setting-row-input {
+	flex-direction: column;
+	align-items: flex-start;
+	gap: 0.5rem;
+}
+
+.rf-setting-row-logo {
+	flex-direction: column;
+	align-items: flex-start;
+	gap: 1rem;
+}
+
+.rf-setting-row-roles {
+	flex-direction: column;
+	align-items: flex-start;
+	gap: 0.75rem;
+}
+
+.rf-setting-label-group {
+	flex: 1;
+	min-width: 0;
+}
+
+.rf-setting-label {
+	display: block;
+	font-family: "JetBrains Mono", monospace;
+	font-size: 0.8125rem;
+	font-weight: 600;
+	color: var(--text-primary);
+	margin: 0 0 0.125rem;
+	letter-spacing: 0.02em;
+}
+
+.rf-setting-hint {
+	display: block;
+	font-size: 0.75rem;
+	color: var(--text-muted);
+	line-height: 1.4;
+}
+
+/* ==========================================================================
+   Toggle Switch
+   ========================================================================== */
+
+.rf-toggle-switch {
+	position: relative;
+	display: inline-flex;
+	align-items: center;
+	cursor: pointer;
+	flex-shrink: 0;
+}
+
+.rf-toggle-switch input {
+	position: absolute;
+	width: 0;
+	height: 0;
+	opacity: 0;
+}
+
+.rf-toggle-track {
+	position: relative;
+	width: 3rem;
+	height: 1.625rem;
+	background-color: var(--bg-tertiary);
+	border: 1px solid var(--border-subtle);
+	border-radius: 9999px;
+	transition: all 0.3s ease;
+}
+
+.rf-toggle-thumb {
+	position: absolute;
+	top: 3px;
+	left: 3px;
+	width: 1.125rem;
+	height: 1.125rem;
+	background-color: var(--text-muted);
+	border-radius: 50%;
+	transition: all 0.3s ease;
+}
+
+.rf-toggle-switch input:checked + .rf-toggle-track {
+	background-color: var(--accent-primary);
+	border-color: var(--accent-primary);
+}
+
+.rf-toggle-switch input:checked + .rf-toggle-track .rf-toggle-thumb {
+	transform: translateX(1.375rem);
+	background-color: var(--bg-primary);
+}
+
+.rf-toggle-switch input:focus-visible + .rf-toggle-track {
+	box-shadow: 0 0 0 3px var(--accent-glow);
+}
+
+/* ==========================================================================
+   Form Inputs
+   ========================================================================== */
+
+.rf-input-admin {
+	display: block;
+	width: 100%;
+	padding: 0.6875rem 1rem;
+	font-family: "JetBrains Mono", monospace;
+	font-size: 0.8125rem;
+	color: var(--text-primary);
+	background-color: var(--bg-tertiary);
+	border: 1px solid var(--border-subtle);
+	border-radius: 0.625rem;
+	outline: none;
+	transition: all 0.3s ease;
+	-webkit-appearance: none;
+	appearance: none;
+}
+
+.rf-input-admin:focus {
+	border-color: var(--border-focus);
+	box-shadow: 0 0 0 3px var(--accent-glow), 0 0 15px var(--accent-glow);
+}
+
+.rf-input-admin::placeholder {
+	color: var(--text-muted);
+	opacity: 0.5;
+}
+
+.rf-input-admin:disabled {
+	opacity: 0.4;
+	cursor: not-allowed;
+}
+
+/* ==========================================================================
+   Range Slider
+   ========================================================================== */
+
+.rf-range-group {
+	display: flex;
+	align-items: center;
+	gap: 1rem;
+	flex-shrink: 0;
+	min-width: 220px;
+}
+
+.rf-range-input {
+	-webkit-appearance: none;
+	appearance: none;
+	width: 100%;
+	height: 6px;
+	border-radius: 3px;
+	background: var(--bg-tertiary);
+	outline: none;
+	cursor: pointer;
+}
+
+.rf-range-input::-webkit-slider-thumb {
+	-webkit-appearance: none;
+	appearance: none;
+	width: 18px;
+	height: 18px;
+	border-radius: 50%;
+	background: var(--accent-primary);
+	border: 2px solid var(--bg-primary);
+	cursor: pointer;
+	box-shadow: 0 0 8px var(--accent-glow);
+	transition: box-shadow 0.2s ease, transform 0.2s ease;
+}
+
+.rf-range-input::-webkit-slider-thumb:hover {
+	box-shadow: 0 0 15px var(--accent-glow);
+	transform: scale(1.15);
+}
+
+.rf-range-input::-moz-range-thumb {
+	width: 18px;
+	height: 18px;
+	border-radius: 50%;
+	background: var(--accent-primary);
+	border: 2px solid var(--bg-primary);
+	cursor: pointer;
+	box-shadow: 0 0 8px var(--accent-glow);
+}
+
+.rf-range-input::-moz-range-track {
+	height: 6px;
+	border-radius: 3px;
+	background: var(--bg-tertiary);
+}
+
+.rf-range-input:disabled {
+	opacity: 0.4;
+	cursor: not-allowed;
+}
+
+.rf-range-input:disabled::-webkit-slider-thumb {
+	box-shadow: none;
+}
+
+.rf-range-value {
+	font-family: "JetBrains Mono", monospace;
+	font-size: 0.875rem;
+	font-weight: 700;
+	color: var(--accent-primary);
+	min-width: 2.5rem;
+	text-align: center;
+	background: var(--bg-tertiary);
+	padding: 0.25rem 0.5rem;
+	border-radius: 0.375rem;
+	border: 1px solid var(--border-subtle);
+}
+
+/* ==========================================================================
+   Logo Preview
+   ========================================================================== */
+
+.rf-logo-preview {
+	width: 100%;
+	max-width: 300px;
+	min-height: 80px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	background: var(--bg-tertiary);
+	border: 1px dashed var(--border-subtle);
+	border-radius: 0.75rem;
+	padding: 1rem;
+	transition: border-color 0.3s ease;
+}
+
+.rf-logo-preview:hover {
+	border-color: rgba(0, 255, 136, 0.3);
+}
+
+.rf-logo-preview img {
+	max-height: 80px;
+	max-width: 100%;
+	width: auto;
+	display: block;
+}
+
+.rf-logo-placeholder {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: 0.5rem;
+	color: var(--text-muted);
+}
+
+.rf-logo-placeholder svg {
+	opacity: 0.5;
+}
+
+.rf-logo-placeholder span {
+	font-size: 0.75rem;
+}
+
+.rf-logo-buttons {
+	display: flex;
+	gap: 0.75rem;
+}
+
+/* ==========================================================================
+   Roles Grid
+   ========================================================================== */
+
+.rf-roles-grid {
+	display: grid;
+	grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+	gap: 0.625rem;
+	width: 100%;
+}
+
+.rf-role-checkbox {
+	display: flex;
+	align-items: center;
+	gap: 0.625rem;
+	padding: 0.625rem 0.875rem;
+	background: var(--bg-tertiary);
+	border: 1px solid var(--border-subtle);
+	border-radius: 0.5rem;
+	cursor: pointer;
+	transition: all 0.2s ease;
+}
+
+.rf-role-checkbox:hover {
+	border-color: rgba(0, 255, 136, 0.3);
+	background: rgba(26, 26, 46, 0.8);
+}
+
+.rf-role-checkbox input {
+	position: absolute;
+	width: 0;
+	height: 0;
+	opacity: 0;
+}
+
+.rf-role-checkmark {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 1.25rem;
+	height: 1.25rem;
+	border: 1.5px solid var(--border-subtle);
+	border-radius: 0.25rem;
+	background: var(--bg-primary);
+	color: transparent;
+	flex-shrink: 0;
+	transition: all 0.2s ease;
+}
+
+.rf-role-checkbox input:checked + .rf-role-checkmark {
+	background: var(--accent-primary);
+	border-color: var(--accent-primary);
+	color: var(--bg-primary);
+}
+
+.rf-role-checkbox input:focus-visible + .rf-role-checkmark {
+	box-shadow: 0 0 0 3px var(--accent-glow);
+}
+
+.rf-role-name {
+	font-size: 0.8125rem;
+	color: var(--text-primary);
+	font-weight: 500;
+}
+
+/* ==========================================================================
+   reCAPTCHA Fields Disabled State
+   ========================================================================== */
+
+.rf-recaptcha-fields[data-disabled="true"] {
+	opacity: 0.45;
+	pointer-events: none;
+}
+
+/* ==========================================================================
+   Buttons
+   ========================================================================== */
+
+.rf-btn-save {
+	display: inline-flex;
+	align-items: center;
+	gap: 0.5rem;
+	padding: 0.75rem 2rem;
+	font-family: "JetBrains Mono", monospace;
+	font-size: 0.8125rem;
+	font-weight: 700;
+	text-transform: uppercase;
+	letter-spacing: 0.08em;
+	color: var(--bg-primary);
+	background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+	border: none;
+	border-radius: 0.625rem;
+	cursor: pointer;
+	transition: all 0.3s ease;
+	outline: none;
+}
+
+.rf-btn-save:hover {
+	transform: scale(1.02);
+	box-shadow: 0 0 25px var(--accent-glow);
+}
+
+.rf-btn-save:active {
+	transform: scale(0.98);
+}
+
+.rf-btn-save:focus-visible {
+	box-shadow: 0 0 0 3px var(--accent-glow), 0 0 25px var(--accent-glow);
+}
+
+.rf-btn-secondary {
+	display: inline-flex;
+	align-items: center;
+	gap: 0.5rem;
+	padding: 0.5rem 1.25rem;
+	font-family: "JetBrains Mono", monospace;
+	font-size: 0.75rem;
+	font-weight: 600;
+	color: var(--accent-primary);
+	background: transparent;
+	border: 1px solid var(--accent-primary);
+	border-radius: 0.5rem;
+	cursor: pointer;
+	transition: all 0.25s ease;
+	outline: none;
+}
+
+.rf-btn-secondary:hover {
+	background: rgba(0, 255, 136, 0.08);
+	box-shadow: 0 0 15px var(--accent-glow);
+}
+
+.rf-btn-secondary:active {
+	transform: scale(0.97);
+}
+
+.rf-btn-ghost {
+	display: inline-flex;
+	align-items: center;
+	gap: 0.5rem;
+	padding: 0.5rem 1.25rem;
+	font-family: "JetBrains Mono", monospace;
+	font-size: 0.75rem;
+	font-weight: 500;
+	color: var(--text-muted);
+	background: transparent;
+	border: 1px solid var(--border-subtle);
+	border-radius: 0.5rem;
+	cursor: pointer;
+	transition: all 0.25s ease;
+	outline: none;
+}
+
+.rf-btn-ghost:hover {
+	color: var(--text-primary);
+	border-color: var(--text-muted);
+}
+
+.rf-btn-danger {
+	display: inline-flex;
+	align-items: center;
+	gap: 0.5rem;
+	padding: 0.5rem 1.25rem;
+	font-family: "JetBrains Mono", monospace;
+	font-size: 0.75rem;
+	font-weight: 600;
+	color: var(--accent-warn);
+	background: transparent;
+	border: 1px solid var(--accent-warn);
+	border-radius: 0.5rem;
+	cursor: pointer;
+	transition: all 0.25s ease;
+	outline: none;
+}
+
+.rf-btn-danger:hover {
+	background: rgba(255, 51, 102, 0.1);
+	box-shadow: 0 0 15px rgba(255, 51, 102, 0.15);
+}
+
+.rf-btn-danger:active {
+	transform: scale(0.97);
+}
+
+.rf-btn-sm {
+	padding: 0.375rem 0.75rem;
+	font-size: 0.6875rem;
+}
+
+/* ==========================================================================
+   Save Bar
+   ========================================================================== */
+
+.rf-save-bar {
+	padding: 0 2rem 2rem;
+}
+
+/* ==========================================================================
+   Users Table
+   ========================================================================== */
+
+.rf-users-search-row {
+	padding: 1.25rem 1.75rem 0;
+}
+
+.rf-search-input-wrapper {
+	position: relative;
+	max-width: 360px;
+}
+
+.rf-search-icon {
+	position: absolute;
+	left: 0.875rem;
+	top: 50%;
+	transform: translateY(-50%);
+	color: var(--text-muted);
+	pointer-events: none;
+}
+
+.rf-search-input {
+	padding-left: 2.5rem !important;
+}
+
+.rf-users-table-wrap {
+	padding: 1.25rem 1.75rem 1.75rem;
+	overflow-x: auto;
+}
+
+.rf-users-table {
+	width: 100%;
+	border-collapse: collapse;
+	font-size: 0.8125rem;
+}
+
+.rf-users-table thead th {
+	font-family: "JetBrains Mono", monospace;
+	font-size: 0.6875rem;
+	font-weight: 600;
+	text-transform: uppercase;
+	letter-spacing: 0.1em;
+	color: var(--text-muted);
+	background: var(--bg-tertiary);
+	padding: 0.75rem 1rem;
+	text-align: left;
+	border-bottom: 1px solid var(--border-subtle);
+	white-space: nowrap;
+}
+
+.rf-users-table thead th:first-child {
+	border-radius: 0.5rem 0 0 0;
+}
+
+.rf-users-table thead th:last-child {
+	border-radius: 0 0.5rem 0 0;
+}
+
+.rf-users-table tbody td {
+	padding: 0.75rem 1rem;
+	border-bottom: 1px solid rgba(31, 41, 55, 0.5);
+	color: var(--text-primary);
+	vertical-align: middle;
+}
+
+.rf-users-table tbody tr:hover {
+	background: rgba(26, 26, 46, 0.5);
+}
+
+.rf-users-table tbody tr:last-child td {
+	border-bottom: none;
+}
+
+.rf-table-loading {
+	text-align: center;
+	color: var(--text-muted);
+	padding: 2rem 1rem !important;
+}
+
+.rf-loading-spinner {
+	display: inline-block;
+	width: 1.25rem;
+	height: 1.25rem;
+	border: 2px solid var(--border-subtle);
+	border-top-color: var(--accent-primary);
+	border-radius: 50%;
+	animation: rf-admin-spin 0.6s linear infinite;
+	margin-right: 0.5rem;
+	vertical-align: middle;
+}
+
+@keyframes rf-admin-spin {
+	to { transform: rotate(360deg); }
+}
+
+/* ==========================================================================
+   Status Badges
+   ========================================================================== */
+
+.rf-badge-active {
+	display: inline-flex;
+	align-items: center;
+	gap: 0.375rem;
+	padding: 0.25rem 0.75rem;
+	font-size: 0.6875rem;
+	font-weight: 600;
+	text-transform: uppercase;
+	letter-spacing: 0.06em;
+	color: var(--accent-primary);
+	background: rgba(0, 255, 136, 0.1);
+	border: 1px solid rgba(0, 255, 136, 0.25);
+	border-radius: 9999px;
+}
+
+.rf-badge-active::before {
+	content: "";
+	display: block;
+	width: 6px;
+	height: 6px;
+	border-radius: 50%;
+	background: var(--accent-primary);
+	box-shadow: 0 0 6px var(--accent-primary);
+}
+
+.rf-badge-inactive {
+	display: inline-flex;
+	align-items: center;
+	gap: 0.375rem;
+	padding: 0.25rem 0.75rem;
+	font-size: 0.6875rem;
+	font-weight: 600;
+	text-transform: uppercase;
+	letter-spacing: 0.06em;
+	color: var(--text-muted);
+	background: rgba(107, 114, 128, 0.1);
+	border: 1px solid rgba(107, 114, 128, 0.25);
+	border-radius: 9999px;
+}
+
+.rf-badge-inactive::before {
+	content: "";
+	display: block;
+	width: 6px;
+	height: 6px;
+	border-radius: 50%;
+	background: var(--text-muted);
+}
+
+/* ==========================================================================
+   User Actions Cell
+   ========================================================================== */
+
+.rf-user-actions {
+	display: flex;
+	gap: 0.5rem;
+	flex-wrap: wrap;
+}
+
+/* ==========================================================================
+   Accordion
+   ========================================================================== */
+
+.rf-accordion {
+	padding: 0 1.75rem 1.75rem;
+}
+
+.rf-accordion-item {
+	border: 1px solid var(--border-subtle);
+	border-radius: 0.75rem;
+	margin-bottom: 0.625rem;
+	overflow: hidden;
+	transition: border-color 0.2s ease;
+}
+
+.rf-accordion-item:hover {
+	border-color: rgba(0, 255, 136, 0.15);
+}
+
+.rf-accordion-trigger {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	width: 100%;
+	padding: 1rem 1.25rem;
+	background: var(--bg-tertiary);
+	border: none;
+	color: var(--text-primary);
+	font-family: "JetBrains Mono", monospace;
+	font-size: 0.8125rem;
+	font-weight: 600;
+	cursor: pointer;
+	transition: background 0.2s ease;
+	text-align: left;
+}
+
+.rf-accordion-trigger:hover {
+	background: rgba(26, 26, 46, 0.9);
+}
+
+.rf-accordion-trigger.active {
+	background: rgba(26, 26, 46, 0.9);
+}
+
+.rf-accordion-title {
+	display: flex;
+	align-items: center;
+	gap: 0.75rem;
+}
+
+.rf-accordion-title svg {
+	color: var(--accent-primary);
+	flex-shrink: 0;
+}
+
+.rf-accordion-chevron {
+	color: var(--text-muted);
+	flex-shrink: 0;
+	transition: transform 0.3s ease;
+}
+
+.rf-accordion-trigger.active .rf-accordion-chevron {
+	transform: rotate(180deg);
+}
+
+.rf-accordion-body {
+	padding: 1.25rem 1.5rem;
+	background: var(--bg-secondary);
+	color: var(--text-primary);
+	font-size: 0.8125rem;
+	line-height: 1.7;
+}
+
+.rf-accordion-body p {
+	margin: 0 0 0.875rem;
+	color: var(--text-primary);
+}
+
+.rf-accordion-body p:last-child {
+	margin-bottom: 0;
+}
+
+.rf-accordion-body h4 {
+	font-family: "Orbitron", sans-serif;
+	font-size: 0.75rem;
+	font-weight: 700;
+	color: var(--accent-secondary);
+	text-transform: uppercase;
+	letter-spacing: 0.08em;
+	margin: 1.25rem 0 0.5rem;
+}
+
+.rf-accordion-body h4:first-child {
+	margin-top: 0;
+}
+
+.rf-accordion-body ol,
+.rf-accordion-body ul {
+	margin: 0 0 0.875rem;
+	padding-left: 1.5rem;
+}
+
+.rf-accordion-body li {
+	margin-bottom: 0.375rem;
+	color: var(--text-primary);
+}
+
+.rf-accordion-body a {
+	color: var(--accent-primary);
+	text-decoration: underline;
+	text-underline-offset: 2px;
+}
+
+.rf-accordion-body a:hover {
+	color: var(--accent-secondary);
+}
+
+/* ==========================================================================
+   Modal
+   ========================================================================== */
+
+.rf-modal-overlay {
+	position: fixed;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	background: rgba(0, 0, 0, 0.7);
+	backdrop-filter: blur(4px);
+	-webkit-backdrop-filter: blur(4px);
+	z-index: 100000;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	padding: 1rem;
+	animation: rf-admin-fade-in 0.2s ease-out;
+}
+
+.rf-modal {
+	background: var(--bg-secondary);
+	border: 1px solid var(--border-subtle);
+	border-radius: 1rem;
+	width: 100%;
+	max-width: 480px;
+	box-shadow: 0 0 60px rgba(0, 0, 0, 0.5), 0 0 30px var(--accent-glow);
+	animation: rf-modal-enter 0.3s ease-out;
+}
+
+@keyframes rf-modal-enter {
+	from {
+		opacity: 0;
+		transform: scale(0.95) translateY(10px);
+	}
+	to {
+		opacity: 1;
+		transform: scale(1) translateY(0);
+	}
+}
+
+.rf-modal-header {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	padding: 1.25rem 1.5rem;
+	border-bottom: 1px solid var(--border-subtle);
+}
+
+.rf-modal-title {
+	font-family: "Orbitron", sans-serif;
+	font-size: 0.9375rem;
+	font-weight: 700;
+	color: var(--text-bright);
+	margin: 0;
+}
+
+.rf-modal-close {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	padding: 0.25rem;
+	background: transparent;
+	border: none;
+	color: var(--text-muted);
+	cursor: pointer;
+	border-radius: 0.375rem;
+	transition: all 0.2s ease;
+}
+
+.rf-modal-close:hover {
+	color: var(--text-primary);
+	background: var(--bg-tertiary);
+}
+
+.rf-modal-body {
+	padding: 1.5rem;
+	font-size: 0.8125rem;
+	color: var(--text-primary);
+	line-height: 1.6;
+}
+
+.rf-modal-body p {
+	margin: 0 0 0.75rem;
+}
+
+.rf-modal-body p:last-child {
+	margin-bottom: 0;
+}
+
+.rf-modal-user-label {
+	color: var(--text-muted);
+}
+
+.rf-modal-user-label strong {
+	color: var(--text-bright);
+}
+
+.rf-modal-footer {
+	display: flex;
+	justify-content: flex-end;
+	gap: 0.75rem;
+	padding: 1rem 1.5rem;
+	border-top: 1px solid var(--border-subtle);
+}
+
+/* ==========================================================================
+   Responsive
+   ========================================================================== */
+
+@media (max-width: 782px) {
+	.rf-settings-header {
+		padding: 1rem 1.25rem;
+		flex-wrap: wrap;
+	}
+
+	.rf-header-title {
+		font-size: 1.125rem;
+	}
+
+	.rf-tabs {
+		padding: 0 1rem;
+	}
+
+	.rf-tab {
+		padding: 0.75rem 0.875rem;
+		font-size: 0.75rem;
+	}
+
+	.rf-tab-content {
+		padding: 1.25rem;
+	}
+
+	.rf-setting-row {
+		flex-direction: column;
+		align-items: flex-start;
+		gap: 0.75rem;
+		padding: 1rem 1.25rem;
+	}
+
+	.rf-range-group {
+		width: 100%;
+		min-width: 0;
+	}
+
+	.rf-roles-grid {
+		grid-template-columns: 1fr;
+	}
+
+	.rf-save-bar {
+		padding: 0 1.25rem 1.5rem;
+	}
+
+	.rf-accordion {
+		padding: 0 1.25rem 1.25rem;
+	}
+
+	.rf-users-search-row {
+		padding: 1rem 1.25rem 0;
+	}
+
+	.rf-users-table-wrap {
+		padding: 1rem 1.25rem 1.25rem;
+	}
+
+	.rf-search-input-wrapper {
+		max-width: 100%;
+	}
+}
+
+@media (max-width: 480px) {
+	.rf-settings-header {
+		gap: 0.625rem;
+	}
+
+	.rf-header-logo {
+		height: 1.5rem;
+	}
+
+	.rf-header-title {
+		font-size: 1rem;
+	}
+
+	.rf-modal {
+		margin: 0.5rem;
+		max-width: 100%;
+	}
+
+	.rf-user-actions {
+		flex-direction: column;
+	}
+}
+
+/* ==========================================================================
+   WP Admin Style Overrides
+   ========================================================================== */
+
+/* Prevent WP admin notices from appearing inside our wrapper */
+.rf-settings-wrap .notice,
+.rf-settings-wrap .updated,
+.rf-settings-wrap .error {
+	display: none;
+}
+
+/* Override WP admin h1 styles within our wrapper */
+.rf-settings-wrap h1,
+.rf-settings-wrap h2,
+.rf-settings-wrap h3,
+.rf-settings-wrap h4 {
+	font-family: "Orbitron", sans-serif;
+	color: var(--text-bright);
+}
+
+/* Hide the WP submit button wrapper if it creeps in */
+.rf-settings-wrap .submit {
+	display: none;
+}
