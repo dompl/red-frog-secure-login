@@ -1,0 +1,840 @@
+/**
+ * Red Frog Secure Login — Login Page Stylesheet.
+ *
+ * Cyberpunk terminal-themed custom login page styles.
+ * Supplements Tailwind CSS with custom selectors, animations,
+ * and component styles that cannot be expressed as utilities.
+ *
+ * @package RedFrogSecureLogin
+ * @since   1.0.0
+ */
+
+/* ==========================================================================
+   Base / Body Reset
+   ========================================================================== */
+
+body.rf-login-page {
+	margin: 0;
+	padding: 0;
+	min-height: 100vh;
+	font-family: "JetBrains Mono", "Fira Code", "Courier New", monospace;
+	background-color: var(--bg-primary);
+	color: var(--text-primary);
+	overflow-x: hidden;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+}
+
+/* ==========================================================================
+   Canvas Background
+   ========================================================================== */
+
+#rf-canvas {
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	z-index: 0;
+	pointer-events: none;
+}
+
+/* ==========================================================================
+   Main Wrapper
+   ========================================================================== */
+
+.rf-login-wrapper {
+	position: relative;
+	z-index: 1;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	min-height: 100vh;
+	padding: 2rem 1.5rem;
+	box-sizing: border-box;
+}
+
+/* ==========================================================================
+   Card
+   ========================================================================== */
+
+.rf-card {
+	width: 100%;
+	max-width: 28rem; /* max-w-md */
+	background: rgba(18, 18, 26, 0.85);
+	backdrop-filter: blur(20px);
+	-webkit-backdrop-filter: blur(20px);
+	border: 1px solid var(--border-subtle);
+	border-radius: 1rem; /* rounded-2xl */
+	padding: 2.5rem;
+	box-shadow: 0 0 40px rgba(0, 255, 136, 0.05);
+	transition: border-color 0.4s ease, box-shadow 0.4s ease;
+}
+
+.rf-card:hover {
+	border-color: rgba(0, 255, 136, 0.3);
+	box-shadow: 0 0 60px rgba(0, 255, 136, 0.08);
+}
+
+@media (min-width: 640px) {
+	.rf-card {
+		padding: 2.5rem 3rem;
+	}
+}
+
+/* ==========================================================================
+   Logo
+   ========================================================================== */
+
+.rf-logo-container {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	margin-bottom: 0.5rem;
+}
+
+.rf-logo-container img,
+.rf-logo-img {
+	max-height: 60px;
+	width: auto;
+	display: block;
+}
+
+.rf-logo-link {
+	display: inline-flex;
+	text-decoration: none;
+}
+
+.rf-logo-link img {
+	max-height: 60px;
+	width: auto;
+	display: block;
+}
+
+.rf-logo-text {
+	font-family: "Orbitron", sans-serif;
+	font-size: 1.5rem;
+	font-weight: 700;
+	color: var(--accent-primary);
+	text-decoration: none;
+	text-shadow: 0 0 20px var(--accent-glow);
+	letter-spacing: 0.05em;
+	display: block;
+	text-align: center;
+	transition: text-shadow 0.3s ease;
+}
+
+.rf-logo-text:hover {
+	text-shadow: 0 0 30px var(--accent-glow), 0 0 60px var(--accent-glow);
+	color: var(--accent-primary);
+}
+
+/* Theme custom logo overrides */
+.rf-logo-custom-theme .custom-logo-link {
+	display: inline-flex;
+}
+
+.rf-logo-custom-theme .custom-logo {
+	max-height: 60px;
+	width: auto;
+}
+
+/* ==========================================================================
+   Tagline
+   ========================================================================== */
+
+.rf-tagline {
+	font-family: "JetBrains Mono", "Fira Code", "Courier New", monospace;
+	font-size: 0.875rem;
+	font-weight: 400;
+	color: var(--text-muted);
+	text-transform: uppercase;
+	letter-spacing: 0.2em;
+	text-align: center;
+	margin: 0 0 1.75rem;
+}
+
+/* ==========================================================================
+   Description Text
+   ========================================================================== */
+
+.rf-description {
+	font-size: 0.875rem;
+	line-height: 1.6;
+	color: var(--text-primary);
+	text-align: center;
+	margin: 0 0 1rem;
+}
+
+.rf-description-muted {
+	font-size: 0.75rem;
+	color: var(--text-muted);
+}
+
+.rf-note {
+	font-size: 0.75rem;
+	color: var(--text-muted);
+	text-align: center;
+	margin: 0 0 1rem;
+	font-style: italic;
+}
+
+/* ==========================================================================
+   Form & Fields
+   ========================================================================== */
+
+.rf-form {
+	width: 100%;
+}
+
+.rf-field {
+	margin-bottom: 1.25rem;
+}
+
+/* ==========================================================================
+   Labels
+   ========================================================================== */
+
+.rf-label {
+	display: block;
+	font-family: "JetBrains Mono", "Fira Code", "Courier New", monospace;
+	font-size: 0.75rem;
+	font-weight: 500;
+	text-transform: uppercase;
+	letter-spacing: 0.1em;
+	color: var(--text-muted);
+	margin-bottom: 0.5rem;
+	transition: color 0.3s ease;
+}
+
+/* Label colour shift on parent focus-within */
+.rf-field:focus-within .rf-label {
+	color: var(--accent-primary);
+}
+
+/* ==========================================================================
+   Inputs
+   ========================================================================== */
+
+.rf-input {
+	display: block;
+	width: 100%;
+	padding: 0.75rem 1rem;
+	font-family: "JetBrains Mono", "Fira Code", "Courier New", monospace;
+	font-size: 0.875rem;
+	color: var(--text-primary);
+	background-color: var(--bg-tertiary);
+	border: 1px solid var(--border-subtle);
+	border-radius: 0.75rem; /* rounded-xl */
+	outline: none;
+	transition: all 0.3s ease;
+	box-sizing: border-box;
+	-webkit-appearance: none;
+	appearance: none;
+}
+
+.rf-input:focus {
+	border-color: var(--border-focus);
+	box-shadow: 0 0 0 3px var(--accent-glow), 0 0 20px var(--accent-glow);
+}
+
+.rf-input::placeholder {
+	color: var(--text-muted);
+	opacity: 0.5;
+}
+
+/* Input with icon — extra left padding */
+.rf-input-with-icon {
+	padding-left: 2.75rem;
+}
+
+/* ==========================================================================
+   Input Icons
+   ========================================================================== */
+
+.rf-input-wrapper {
+	position: relative;
+}
+
+.rf-input-icon {
+	position: absolute;
+	left: 0.875rem;
+	top: 50%;
+	transform: translateY(-50%);
+	color: var(--text-muted);
+	pointer-events: none;
+	transition: color 0.3s ease;
+	display: flex;
+	align-items: center;
+	z-index: 1;
+}
+
+/* Icon colour shift on parent focus-within */
+.rf-field:focus-within .rf-input-icon,
+.rf-input-wrapper:focus-within .rf-input-icon {
+	color: var(--accent-primary);
+}
+
+/* ==========================================================================
+   2FA Digit Inputs
+   ========================================================================== */
+
+.rf-2fa-description {
+	font-size: 0.8125rem;
+	color: var(--text-muted);
+	margin: 0 0 1rem;
+	text-align: center;
+}
+
+.rf-2fa-digits {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	gap: 0.5rem;
+}
+
+.rf-2fa-separator {
+	color: var(--text-muted);
+	font-size: 1.25rem;
+	margin: 0 0.125rem;
+	opacity: 0.5;
+	user-select: none;
+}
+
+.rf-2fa-digit {
+	width: 3rem;
+	height: 3.5rem;
+	text-align: center;
+	font-family: "JetBrains Mono", "Fira Code", "Courier New", monospace;
+	font-size: 1.5rem;
+	font-weight: 700;
+	color: var(--text-bright);
+	background-color: var(--bg-tertiary);
+	border: 1px solid var(--border-subtle);
+	border-radius: 0.75rem;
+	outline: none;
+	transition: all 0.3s ease;
+	-webkit-appearance: none;
+	appearance: none;
+	box-sizing: border-box;
+}
+
+.rf-2fa-digit:focus {
+	border-color: var(--border-focus);
+	box-shadow: 0 0 0 3px var(--accent-glow), 0 0 20px var(--accent-glow);
+}
+
+.rf-2fa-digit.rf-digit-filled {
+	border-color: var(--accent-primary);
+	color: var(--accent-primary);
+}
+
+@media (max-width: 480px) {
+	.rf-2fa-digit {
+		width: 2.5rem;
+		height: 3rem;
+		font-size: 1.25rem;
+	}
+
+	.rf-2fa-digits {
+		gap: 0.35rem;
+	}
+}
+
+/* ==========================================================================
+   Button — Primary
+   ========================================================================== */
+
+.rf-btn-primary {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 100%;
+	padding: 0.75rem 1.5rem;
+	font-family: "JetBrains Mono", "Fira Code", "Courier New", monospace;
+	font-size: 0.875rem;
+	font-weight: 700;
+	text-transform: uppercase;
+	letter-spacing: 0.1em;
+	color: var(--bg-primary);
+	background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+	border: none;
+	border-radius: 0.75rem;
+	cursor: pointer;
+	transition: all 0.3s ease;
+	outline: none;
+	box-sizing: border-box;
+}
+
+.rf-btn-primary:hover {
+	transform: scale(1.02);
+	box-shadow: 0 0 30px var(--accent-glow);
+}
+
+.rf-btn-primary:active {
+	transform: scale(0.98);
+}
+
+.rf-btn-primary:focus-visible {
+	box-shadow: 0 0 0 3px var(--accent-glow), 0 0 30px var(--accent-glow);
+}
+
+.rf-btn-primary:disabled {
+	opacity: 0.7;
+	cursor: not-allowed;
+	transform: none;
+	box-shadow: none;
+}
+
+/* Button loading state content */
+.rf-btn-loading-content {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	gap: 0.5rem;
+}
+
+.rf-spinner {
+	animation: rf-spin 1s linear infinite;
+}
+
+@keyframes rf-spin {
+	from { transform: rotate(0deg); }
+	to { transform: rotate(360deg); }
+}
+
+/* ==========================================================================
+   Link Button (text-only, looks like a link)
+   ========================================================================== */
+
+.rf-link-button {
+	display: block;
+	width: 100%;
+	padding: 0.5rem 0;
+	margin-top: 0.5rem;
+	background: none;
+	border: none;
+	font-family: "JetBrains Mono", "Fira Code", "Courier New", monospace;
+	font-size: 0.8125rem;
+	color: var(--text-muted);
+	cursor: pointer;
+	text-align: center;
+	transition: color 0.3s ease;
+	text-decoration: none;
+}
+
+.rf-link-button:hover {
+	color: var(--accent-primary);
+}
+
+/* ==========================================================================
+   Remember Me Toggle
+   ========================================================================== */
+
+.rf-remember-row {
+	display: flex;
+	align-items: center;
+	margin-bottom: 1.5rem;
+}
+
+.rf-toggle-label {
+	display: flex;
+	align-items: center;
+	gap: 0.75rem;
+	cursor: pointer;
+	user-select: none;
+}
+
+.rf-toggle {
+	position: relative;
+	width: 2.75rem;
+	height: 1.5rem;
+	background-color: var(--bg-tertiary);
+	border: 1px solid var(--border-subtle);
+	border-radius: 9999px;
+	transition: all 0.3s ease;
+	flex-shrink: 0;
+}
+
+.rf-toggle-dot {
+	position: absolute;
+	top: 2px;
+	left: 2px;
+	width: 1.125rem;
+	height: 1.125rem;
+	background-color: var(--text-muted);
+	border-radius: 50%;
+	transition: all 0.3s ease;
+}
+
+/* Checked state — dot moves right and turns dark */
+.rf-toggle-label input:checked + .rf-toggle {
+	background-color: var(--accent-primary);
+	border-color: var(--accent-primary);
+}
+
+.rf-toggle-label input:checked + .rf-toggle .rf-toggle-dot {
+	transform: translateX(1.25rem);
+	background-color: var(--bg-primary);
+}
+
+/* Focus state */
+.rf-toggle-label input:focus-visible + .rf-toggle {
+	box-shadow: 0 0 0 3px var(--accent-glow);
+}
+
+.rf-toggle-text {
+	font-size: 0.8125rem;
+	color: var(--text-muted);
+	transition: color 0.3s ease;
+}
+
+.rf-toggle-label:hover .rf-toggle-text {
+	color: var(--text-primary);
+}
+
+/* ==========================================================================
+   Error Bar
+   ========================================================================== */
+
+.rf-error-bar {
+	background-color: rgba(255, 51, 102, 0.1);
+	border-left: 4px solid var(--accent-warn);
+	border-radius: 0.5rem;
+	padding: 0.75rem 1rem;
+	margin-bottom: 1.25rem;
+	animation: rf-fade-in 0.4s ease-out;
+}
+
+.rf-error-bar .rf-error-message {
+	font-size: 0.8125rem;
+	line-height: 1.5;
+	color: var(--accent-warn);
+}
+
+.rf-error-bar .rf-error-message + .rf-error-message {
+	margin-top: 0.5rem;
+}
+
+.rf-error-bar a {
+	color: var(--accent-warn);
+	text-decoration: underline;
+	transition: opacity 0.3s ease;
+}
+
+.rf-error-bar a:hover {
+	opacity: 0.8;
+}
+
+/* ==========================================================================
+   Success Bar
+   ========================================================================== */
+
+.rf-success-bar {
+	background-color: rgba(0, 255, 136, 0.1);
+	border-left: 4px solid var(--accent-primary);
+	border-radius: 0.5rem;
+	padding: 0.75rem 1rem;
+	margin-bottom: 1.25rem;
+	font-size: 0.8125rem;
+	line-height: 1.5;
+	color: var(--accent-primary);
+	animation: rf-fade-in 0.4s ease-out;
+}
+
+/* ==========================================================================
+   Lost Password & Back Links
+   ========================================================================== */
+
+.rf-lost-password,
+.rf-back-link {
+	text-align: center;
+	margin-top: 1.25rem;
+}
+
+.rf-lost-password-link {
+	font-size: 0.8125rem;
+	color: var(--text-muted);
+	text-decoration: none;
+	transition: color 0.3s ease;
+}
+
+.rf-lost-password-link:hover {
+	color: var(--accent-primary);
+}
+
+/* ==========================================================================
+   Tooltip (Flowbite override)
+   ========================================================================== */
+
+.rf-tooltip {
+	background-color: var(--bg-tertiary);
+	color: var(--text-primary);
+	font-family: "JetBrains Mono", "Fira Code", "Courier New", monospace;
+	font-size: 0.75rem;
+	padding: 0.5rem 0.75rem;
+	border-radius: 0.5rem;
+	border: 1px solid var(--border-subtle);
+	box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+	z-index: 50;
+	opacity: 0;
+	visibility: hidden;
+	transition: opacity 0.2s ease, visibility 0.2s ease;
+	position: absolute;
+}
+
+.rf-tooltip[data-show] {
+	opacity: 1;
+	visibility: visible;
+}
+
+.rf-tooltip .tooltip-arrow {
+	display: none; /* Simplified — no arrow needed */
+}
+
+/* ==========================================================================
+   Check Email Icon
+   ========================================================================== */
+
+.rf-checkemail-icon {
+	display: flex;
+	justify-content: center;
+	margin: 1.5rem 0;
+}
+
+.rf-envelope-svg {
+	color: var(--accent-primary);
+	opacity: 0.6;
+	animation: rf-pulse 2s ease-in-out infinite;
+}
+
+/* ==========================================================================
+   Footer
+   ========================================================================== */
+
+.rf-footer {
+	position: fixed;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	gap: 0.5rem;
+	padding: 1rem;
+	z-index: 1;
+}
+
+.rf-footer-logo-link {
+	display: inline-flex;
+	opacity: 0.6;
+	transition: opacity 0.3s ease;
+}
+
+.rf-footer-logo-link:hover {
+	opacity: 1;
+}
+
+.rf-footer-logo {
+	display: block;
+}
+
+.rf-footer-text {
+	font-size: 0.6875rem;
+	color: var(--text-muted);
+	letter-spacing: 0.05em;
+}
+
+/* ==========================================================================
+   Utility: Hidden
+   ========================================================================== */
+
+.hidden {
+	display: none !important;
+}
+
+/* ==========================================================================
+   Animations — Keyframes
+   ========================================================================== */
+
+/* Card entrance — slide up + fade in */
+@keyframes rf-slide-up {
+	from {
+		opacity: 0;
+		transform: translateY(20px);
+	}
+	to {
+		opacity: 1;
+		transform: translateY(0);
+	}
+}
+
+/* Element staggered reveal — subtle fade in + slide */
+@keyframes rf-fade-in {
+	from {
+		opacity: 0;
+		transform: translateY(8px);
+	}
+	to {
+		opacity: 1;
+		transform: translateY(0);
+	}
+}
+
+/* Error shake */
+@keyframes rf-shake {
+	0%, 100% { transform: translateX(0); }
+	10%, 50%, 90% { transform: translateX(-6px); }
+	30%, 70% { transform: translateX(6px); }
+}
+
+/* Success glow — border pulse */
+@keyframes rf-success-glow {
+	0%, 100% {
+		border-color: var(--border-subtle);
+		box-shadow: 0 0 40px rgba(0, 255, 136, 0.05);
+	}
+	50% {
+		border-color: var(--accent-primary);
+		box-shadow: 0 0 60px rgba(0, 255, 136, 0.2);
+	}
+}
+
+/* Pulse — opacity */
+@keyframes rf-pulse {
+	0%, 100% { opacity: 0.6; }
+	50% { opacity: 1; }
+}
+
+/* Fade out + collapse */
+@keyframes rf-fade-out {
+	from {
+		opacity: 1;
+		transform: translateY(0);
+		max-height: 200px;
+	}
+	to {
+		opacity: 0;
+		transform: translateY(-10px);
+		max-height: 0;
+		padding: 0;
+		margin: 0;
+		overflow: hidden;
+	}
+}
+
+/* ==========================================================================
+   Animation Classes
+   ========================================================================== */
+
+.rf-card-entrance {
+	animation: rf-slide-up 0.6s ease-out both;
+}
+
+.rf-stagger {
+	opacity: 0;
+	animation: rf-fade-in 0.5s ease-out both;
+	animation-delay: calc(0.2s + var(--stagger, 0) * 0.1s);
+}
+
+.rf-shake {
+	animation: rf-shake 0.5s ease-in-out;
+}
+
+.rf-success-glow {
+	animation: rf-success-glow 1.5s ease-in-out;
+}
+
+.rf-pulse {
+	animation: rf-pulse 1.5s ease-in-out infinite;
+}
+
+.rf-fade-out {
+	animation: rf-fade-out 0.4s ease-in both;
+}
+
+.rf-fade-in-delayed {
+	animation: rf-fade-in 0.4s ease-out 0.2s both;
+}
+
+/* ==========================================================================
+   Reduced Motion
+   ========================================================================== */
+
+@media (prefers-reduced-motion: reduce) {
+	.rf-card-entrance,
+	.rf-stagger,
+	.rf-shake,
+	.rf-success-glow,
+	.rf-pulse,
+	.rf-fade-out,
+	.rf-fade-in-delayed {
+		animation: none !important;
+		opacity: 1 !important;
+		transform: none !important;
+	}
+
+	*,
+	*::before,
+	*::after {
+		transition-duration: 0.01ms !important;
+		animation-duration: 0.01ms !important;
+	}
+
+	.rf-envelope-svg {
+		animation: none !important;
+		opacity: 0.6 !important;
+	}
+}
+
+/* ==========================================================================
+   Custom Scrollbar
+   ========================================================================== */
+
+body.rf-login-page::-webkit-scrollbar {
+	width: 8px;
+}
+
+body.rf-login-page::-webkit-scrollbar-track {
+	background: var(--bg-primary);
+}
+
+body.rf-login-page::-webkit-scrollbar-thumb {
+	background: var(--bg-tertiary);
+	border-radius: 4px;
+}
+
+body.rf-login-page::-webkit-scrollbar-thumb:hover {
+	background: var(--border-subtle);
+}
+
+body.rf-login-page {
+	scrollbar-width: thin;
+	scrollbar-color: var(--bg-tertiary) var(--bg-primary);
+}
+
+/* ==========================================================================
+   Responsive — Small screens
+   ========================================================================== */
+
+@media (max-width: 480px) {
+	.rf-card {
+		padding: 1.5rem;
+		border-radius: 0.75rem;
+	}
+
+	.rf-logo-text {
+		font-size: 1.25rem;
+	}
+
+	.rf-tagline {
+		font-size: 0.75rem;
+		letter-spacing: 0.15em;
+	}
+
+	.rf-btn-primary {
+		padding: 0.625rem 1rem;
+		font-size: 0.8125rem;
+	}
+}
