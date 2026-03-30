@@ -511,9 +511,9 @@
 		var token = tfaTokenInput ? tfaTokenInput.value : '';
 
 		var result = await ajaxPost( 'rf_verify_2fa', {
-			rf_2fa_token: token,
+			token: token,
 			code: code,
-			security: config.nonce
+			rf_login_nonce_field: config.nonce
 		});
 
 		setLoading( false );
@@ -529,7 +529,7 @@
 		/* Increment attempt counter */
 		tfaAttempts++;
 
-		if ( tfaAttempts >= MAX_TFA_ATTEMPTS || result.code === 'session_expired' ) {
+		if ( tfaAttempts >= MAX_TFA_ATTEMPTS || result.status === 'expired' ) {
 			showError( i18n.tooManyAttempts || 'Too many failed attempts. Please log in again.' );
 			setTimeout( function () {
 				window.location.href = config.loginUrl || window.location.href;
@@ -655,10 +655,10 @@
 		var token = tfaTokenInput ? tfaTokenInput.value : '';
 
 		var result = await ajaxPost( 'rf_verify_2fa', {
-			rf_2fa_token: token,
+			token: token,
 			code: code,
 			type: 'backup',
-			security: config.nonce
+			rf_login_nonce_field: config.nonce
 		});
 
 		setLoading( false );
@@ -674,7 +674,7 @@
 		/* Increment attempt counter */
 		tfaAttempts++;
 
-		if ( tfaAttempts >= MAX_TFA_ATTEMPTS || result.code === 'session_expired' ) {
+		if ( tfaAttempts >= MAX_TFA_ATTEMPTS || result.status === 'expired' ) {
 			showError( i18n.tooManyAttempts || 'Too many failed attempts. Please log in again.' );
 			setTimeout( function () {
 				window.location.href = config.loginUrl || window.location.href;
@@ -728,10 +728,10 @@
 			setupSubmitBtn.textContent = i18n.verifying || 'Verifying...';
 
 			var result = await ajaxPost( 'rf_setup_2fa', {
-				rf_2fa_token: token,
+				token: token,
 				code: code,
 				secret: secret,
-				security: config.nonce
+				rf_login_nonce_field: config.nonce
 			});
 
 			setupSubmitBtn.disabled = false;
@@ -839,15 +839,14 @@
 				pwd: password ? password.value : '',
 				rf_login_nonce_field: nonce ? nonce.value : '',
 				redirect_to: redirectTo ? redirectTo.value : '',
-				rememberme: rememberMe && rememberMe.checked ? 'forever' : '',
-				security: config.nonce
+				rememberme: rememberMe && rememberMe.checked ? 'forever' : ''
 			};
 
 			/* reCAPTCHA v3 token (if configured) */
 			if ( config.recaptchaKey && typeof grecaptcha !== 'undefined' ) {
 				try {
 					var recaptchaToken = await grecaptcha.execute( config.recaptchaKey, { action: 'login' } );
-					payload.g_recaptcha_response = recaptchaToken;
+					payload.recaptcha_token = recaptchaToken;
 				} catch ( recaptchaError ) {
 					/* Silently continue without reCAPTCHA — server will handle validation */
 				}

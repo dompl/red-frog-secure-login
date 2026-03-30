@@ -14,7 +14,7 @@ Built by [Dom Kapelewski](https://redfrogstudio.co.uk) at **Red Frog Studio**.
 - **Backup codes** -- one-time-use recovery codes for emergency access when an authenticator app is unavailable.
 - **reCAPTCHA v3 integration** -- invisible bot protection on the login form with configurable score threshold.
 - **Role-based 2FA enforcement** -- require specific WordPress roles (Administrator, Editor, etc.) to enable two-factor authentication.
-- **Admin settings page** -- dark-themed settings panel under Settings > Secure Login with Flowbite UI components, colour picker, media uploader, and per-user 2FA management table.
+- **Admin settings page** -- dark-themed settings panel under Settings > Secure Login with Flowbite UI components, media uploader, and per-user 2FA management table.
 - **User profile 2FA setup** -- users can enable/disable 2FA and view backup codes directly from their WordPress profile page.
 - **GitHub auto-updates** -- the plugin checks for new releases on GitHub and supports one-click updates from the WordPress dashboard. No manual downloads required after initial installation.
 - **Fully self-contained** -- no build tools, no npm, no Composer. Tailwind CSS and Flowbite loaded via CDN. Works out of the box on any WordPress install.
@@ -47,7 +47,8 @@ Navigate to **Settings > Secure Login** in the WordPress admin to configure the 
 - **Enable Custom Login Page** -- toggle the custom login screen on or off. When disabled, the default WordPress login page is used.
 - **Login Page Logo** -- upload a custom logo for the login page (separate from your theme's logo). If not set, the site name is displayed in the Orbitron typeface.
 - **Background Particle Count** -- control the number of animated particles on the login canvas (range: 20--120, default: 80).
-- **Accent Colour** -- customise the primary neon accent colour used across the login page (default: `#00ff88`).
+
+The accent colour and other visual properties can be customised by overriding CSS variables (e.g. `--accent-primary`, `--bg-primary`) via a child theme or the WordPress Customizer's "Additional CSS" panel. Target the `body.rf-login-page` selector for specificity.
 
 ### reCAPTCHA v3
 

@@ -21,8 +21,7 @@ $rf_options = array(
 	'rf_secure_login_enabled',
 	'rf_particle_count',
 	'rf_accent_colour',
-	'rf_login_logo_id',
-	'rf_login_logo_url',
+	'rf_login_logo',
 	'rf_recaptcha_enabled',
 	'rf_recaptcha_site_key',
 	'rf_recaptcha_secret_key',
@@ -42,7 +41,8 @@ global $wpdb;
 $rf_user_meta_keys = array(
 	'_rf_2fa_secret',
 	'_rf_2fa_enabled',
-	'_rf_backup_codes',
+	'_rf_2fa_setup_date',
+	'_rf_2fa_backup_codes',
 );
 
 foreach ( $rf_user_meta_keys as $meta_key ) {

@@ -466,7 +466,7 @@ class RF_Login_Page {
 	 */
 	private function get_logo_html() {
 		// Check for plugin-specific login logo.
-		$logo_id = get_option( 'rf_login_logo_id', 0 );
+		$logo_id = get_option( 'rf_login_logo', 0 );
 		if ( $logo_id ) {
 			$logo_url = wp_get_attachment_image_url( $logo_id, 'medium' );
 			if ( $logo_url ) {

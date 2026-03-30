@@ -176,7 +176,14 @@ class RF_Settings {
 			return array();
 		}
 
-		return array_map( 'sanitize_text_field', $value );
+		$valid_roles = array_keys( wp_roles()->get_names() );
+
+		return array_values(
+			array_intersect(
+				array_map( 'sanitize_text_field', $value ),
+				$valid_roles
+			)
+		);
 	}
 
 	/**

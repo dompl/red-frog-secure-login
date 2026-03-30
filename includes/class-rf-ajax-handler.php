@@ -76,6 +76,21 @@ class RF_Ajax_Handler {
 			);
 		}
 
+		// Verify reCAPTCHA if enabled.
+		if ( class_exists( 'RF_Recaptcha' ) && RF_Recaptcha::is_enabled() ) {
+			$recaptcha     = new RF_Recaptcha();
+			$recaptcha_tok = isset( $_POST['recaptcha_token'] ) ? sanitize_text_field( wp_unslash( $_POST['recaptcha_token'] ) ) : '';
+
+			if ( ! $recaptcha->verify_token( $recaptcha_tok ) ) {
+				wp_send_json(
+					array(
+						'status'  => 'error',
+						'message' => __( 'Security verification failed. Please try again.', 'rf-secure-login' ),
+					)
+				);
+			}
+		}
+
 		// Retrieve and sanitise credentials.
 		$log = isset( $_POST['log'] ) ? sanitize_user( wp_unslash( $_POST['log'] ) ) : '';
 		$pwd = isset( $_POST['pwd'] ) ? wp_unslash( $_POST['pwd'] ) : ''; // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized -- Password must not be sanitised.
@@ -105,7 +120,13 @@ class RF_Ajax_Handler {
 
 		// Check if user has 2FA enabled.
 		if ( RF_Two_Factor::is_enabled_for_user( $user->ID ) ) {
-			$token = RF_Rate_Limiter::create_pending_session( $user->ID );
+			$token   = RF_Rate_Limiter::create_pending_session( $user->ID );
+			$session = get_transient( '_rf_2fa_pending_' . $token );
+
+			if ( is_array( $session ) ) {
+				$session['remember'] = $remember;
+				set_transient( '_rf_2fa_pending_' . $token, $session, RF_Rate_Limiter::SESSION_TTL );
+			}
 
 			wp_send_json(
 				array(
@@ -124,7 +145,8 @@ class RF_Ajax_Handler {
 			$session = get_transient( '_rf_2fa_pending_' . $token );
 
 			if ( is_array( $session ) ) {
-				$session['secret'] = $secret;
+				$session['secret']   = $secret;
+				$session['remember'] = $remember;
 				set_transient( '_rf_2fa_pending_' . $token, $session, RF_Rate_Limiter::SESSION_TTL );
 			}
 
@@ -150,7 +172,7 @@ class RF_Ajax_Handler {
 		wp_set_auth_cookie( $user->ID, $remember );
 		wp_set_current_user( $user->ID );
 
-		$redirect = ! empty( $_POST['redirect_to'] ) ? esc_url_raw( wp_unslash( $_POST['redirect_to'] ) ) : admin_url();
+		$redirect = ! empty( $_POST['redirect_to'] ) ? wp_validate_redirect( wp_unslash( $_POST['redirect_to'] ), admin_url() ) : admin_url();
 
 		wp_send_json(
 			array(
@@ -230,11 +252,12 @@ class RF_Ajax_Handler {
 
 		if ( $valid ) {
 			// Success — clean up session and log user in.
+			$remember = ! empty( $session['remember'] );
 			RF_Rate_Limiter::delete_pending_session( $token );
-			wp_set_auth_cookie( $user_id, false );
+			wp_set_auth_cookie( $user_id, $remember );
 			wp_set_current_user( $user_id );
 
-			$redirect = ! empty( $_POST['redirect_to'] ) ? esc_url_raw( wp_unslash( $_POST['redirect_to'] ) ) : admin_url();
+			$redirect = ! empty( $_POST['redirect_to'] ) ? wp_validate_redirect( wp_unslash( $_POST['redirect_to'] ), admin_url() ) : admin_url();
 
 			wp_send_json(
 				array(
@@ -306,8 +329,11 @@ class RF_Ajax_Handler {
 		}
 
 		$user_id = (int) $session['user_id'];
-		$secret  = isset( $_POST['secret'] ) ? sanitize_text_field( wp_unslash( $_POST['secret'] ) ) : '';
 		$code    = isset( $_POST['code'] ) ? sanitize_text_field( wp_unslash( $_POST['code'] ) ) : '';
+
+		// Use the secret stored server-side in the pending session, NOT the client-submitted value.
+		// This prevents an attacker from substituting their own secret.
+		$secret = isset( $session['secret'] ) ? $session['secret'] : '';
 
 		if ( empty( $secret ) || empty( $code ) ) {
 			wp_send_json(
@@ -318,7 +344,7 @@ class RF_Ajax_Handler {
 			);
 		}
 
-		// Validate the TOTP code against the provided secret.
+		// Validate the TOTP code against the server-stored secret.
 		if ( ! RF_Two_Factor::validate_code( $secret, $code ) ) {
 			wp_send_json(
 				array(
@@ -344,8 +370,9 @@ class RF_Ajax_Handler {
 		$backup_codes = RF_Backup_Codes::generate( $user_id );
 
 		// Clean up session and log user in.
+		$remember = ! empty( $session['remember'] );
 		RF_Rate_Limiter::delete_pending_session( $token );
-		wp_set_auth_cookie( $user_id, false );
+		wp_set_auth_cookie( $user_id, $remember );
 		wp_set_current_user( $user_id );
 
 		wp_send_json(
